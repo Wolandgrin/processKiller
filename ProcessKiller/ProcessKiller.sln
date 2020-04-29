@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainLauncher", "MainLauncher\MainLauncher.csproj", "{7E2AE3EE-D320-4C17-9503-7580ED7DE3CB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monitor", "Monitor\Monitor.csproj", "{7E2AE3EE-D320-4C17-9503-7580ED7DE3CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

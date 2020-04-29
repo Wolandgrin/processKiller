@@ -10,27 +10,27 @@ namespace Main
     {
         private static void Main(string[] args)
         {
-            Console.WriteLine("This is an app killer tool. It monitors and kills necessary process if it is launched " +
+            Console.WriteLine("This is an application monitoring tool. It monitors necessary process  and stops it if it is launched " +
                               "more than provided amount of time (in minutes)");
             Console.WriteLine("Usage: monitor.exe <processName> <processTimeout> <processCheckInterval>");
             Console.WriteLine("Example: monitor.exe notepad 5 1");
 
             if (args.Length < 3)
             {
-                Console.WriteLine("Incorrect amount of parameters!");
+                Console.WriteLine("Incorrect number of parameters!");
                 Console.WriteLine("Usage: Monitor.exe <processName> <processTimeout> <processCheckInterval>");
                 return;
             }
 
-            if (!(int.TryParse(args[1], out var timeout)))
+            if (!int.TryParse(args[1], out var timeout) || timeout <= 0)
             {
-                Console.WriteLine("Please provide a timeout argument as integer");
+                Console.WriteLine("Please provide a timeout argument as positive integer");
                 return;
             }
 
-            if (!(int.TryParse(args[2], out var checkInterval)))
+            if (!int.TryParse(args[2], out var checkInterval) || checkInterval <= 0)
             {
-                Console.WriteLine("Please provide a check interval argument as integer");
+                Console.WriteLine("Please provide a check interval argument as a positive integer");
                 return;
             }
 
@@ -38,7 +38,7 @@ namespace Main
 
             if (proc.IsProcessRunning() != true)
             {
-                Console.WriteLine("Process '{0}' is not running. Exiting...", proc.Name);
+                Console.WriteLine($"Process '{proc.Name}' is not running. Exiting...");
                 return;
             }
             proc.Monitor(timeout, checkInterval);
@@ -68,7 +68,7 @@ namespace ProcessManager
             Name = _processName;
         }
 
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary>
         /// Determines if the process is running or NOT
@@ -87,7 +87,8 @@ namespace ProcessManager
         {
             while (IsProcessRunning())
             {
-                if (GetProcessExecutionTime(_processName) >= timeout)
+                int executionTime = GetProcessExecutionTime(_processName);
+                if (executionTime >= timeout)
                 {
                     Console.WriteLine(
                         $"Killing {_processName} at {DateTime.Now.ToString(CultureInfo.InvariantCulture)} due to " +
@@ -96,8 +97,8 @@ namespace ProcessManager
                     break;
                 }
                 // Sleep till the next loop
-                Console.WriteLine("Process '{0}' is running, waiting {1} minute(s)", _processName, checkInterval);
-                Thread.Sleep(checkInterval * 60000);
+                Console.WriteLine($"Process '{_processName}' is running for {executionTime} minute(s), waiting {checkInterval} more minute(s)");
+                Thread.Sleep(checkInterval * 60000 + 60000);
             }
         }
 
@@ -110,7 +111,6 @@ namespace ProcessManager
             var p = Process.GetProcessesByName(processName);
             if (p.Length <= 0) throw new Exception("Process not found!");
             var span = DateTime.Now - p[0].StartTime;
-            Console.WriteLine((int)span.TotalMinutes);
             return (int)span.TotalMinutes;
         }
 
@@ -146,7 +146,7 @@ namespace ProcessManager
         /// </summary>
         public static void FreezeOnScreen()
         {
-            Console.WriteLine("Press any key to exit...");
+            Console.WriteLine("Process is not running anymore, press any key to exit...");
             Console.Read();
         }
     }

@@ -1,5 +1,4 @@
 .\idea
 \packages
-ProcessKiller/MainLauncher/bin
-ProcessKiller/MainLauncher/obj
-ProcessKiller/MainClass/obj
+/Monitor/bin
+/Monitor/obj
