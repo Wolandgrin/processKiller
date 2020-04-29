@@ -1,9 +1,9 @@
 ## This is a small project building application that monitors launched Windows process and kills it when timeout is reached.
 ### Verified on Windows 10 using Rider/Visual Studio
-* Monitor.exe file is built in the bin/Debugfloder
-* For proper app monitoring launch: "Monitor.exe <process name> <process timeout> <check interval>" 
+* Monitor.exe file is built in the bin/Debug folder
+* For proper app monitoring launch: `Monitor.exe <process name> <process timeout> <check interval>`
 * This command line utility expects three arguments: a process name, its maximum lifetime (in minutes) and a monitoring frequency (in minutes, as well). 
-* When you run the program, it starts monitoring processes with the frequency specified. 
+* When you run the program, it starts monitoring launched process with the frequency specified. 
 * If a process of interest lives longer than the allowed duration, the utility kills the process and adds the corresponding record to the console log.
 * Example: monitor.exe notepad 5 1 – checks launched notepad.exe every minute and kills notepad process if it lives longer than 5 minutes
 
