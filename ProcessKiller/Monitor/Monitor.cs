@@ -91,13 +91,13 @@ namespace ProcessManager
                 if (executionTime >= timeout)
                 {
                     Console.WriteLine(
-                        $"Killing {_processName} at {DateTime.Now.ToString(CultureInfo.InvariantCulture)} due to " +
-                        $"timeout {timeout} minutes.");
+                        $"Killing '{_processName}' at {DateTime.Now.ToString(CultureInfo.InvariantCulture)} due to " +
+                        $"{timeout} minutes timeout.");
                     KillProcess(_processName); // Kills the running process
                     break;
                 }
                 // Sleep till the next loop
-                Console.WriteLine($"Process '{_processName}' is running for {executionTime} minute(s), waiting {checkInterval} more minute(s)");
+                Console.WriteLine($"Process '{_processName}' is running for {executionTime} minute(s), waiting {checkInterval} + 1 more minute(s)");
                 Thread.Sleep(checkInterval * 60000 + 60000);
             }
         }
